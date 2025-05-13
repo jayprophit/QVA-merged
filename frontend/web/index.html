@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Virtual Assistant</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/quantum-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="js/utils.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo"><i class="fas fa-atom"></i></div>
+                <h1>QVA</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                    <li><a href="#assistant"><i class="fas fa-robot"></i> <span>Assistant</span></a></li>
+                    <li><a href="#quantum"><i class="fas fa-atom"></i> <span>Quantum</span></a></li>
+                    <li><a href="#blockchain"><i class="fas fa-cube"></i> <span>Blockchain</span></a></li>
+                    <li><a href="#settings"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+                <span class="version">v1.0.0</span>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="main-header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="user-actions">
+                    <button class="notification-btn"><i class="fas fa-bell"></i></button>
+                    <div class="user-profile"><span>User</span></div>
+                </div>
+            </header>
+            <!-- Dashboard View -->
+            <section id="dashboard-view" class="view active">
+                <h2>Dashboard</h2>
+                <div class="dashboard-grid">
+                    <!-- System Status Card -->
+                    <div class="card status-card">
+                        <div class="card-header">
+                            <h3>System Status</h3>
+                            <span class="status-indicator online"></span>
+                        </div>
+                        <div class="card-body">
+                            <div class="status-metric">
+                                <span class="metric-label">CPU Usage</span>
+                                <div class="progress-bar"><div class="progress" style="width: 45%"></div></div>
+                                <span class="metric-value">45%</span>
+                            </div>
+                            <div class="status-metric">
+                                <span class="metric-label">Memory</span>
+                                <div class="progress-bar"><div class="progress" style="width: 32%"></div></div>
+                                <span class="metric-value">32%</span>
+                            </div>
+                            <div class="status-metric">
+                                <span class="metric-label">Quantum Cores</span>
+                                <div class="progress-bar"><div class="progress" style="width: 78%"></div></div>
+                                <span class="metric-value">78%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- AI Agents Card -->
+                    <div class="card agents-card">
+                        <div class="card-header">
+                            <h3>AI Agents</h3>
+                            <button class="add-btn"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="card-body">
+                            <ul class="agents-list">
+                                <li class="agent-item active"><i class="fas fa-robot"></i><span class="agent-name">Assistant</span><span class="agent-status">Active</span></li>
+                                <li class="agent-item"><i class="fas fa-search"></i><span class="agent-name">Researcher</span><span class="agent-status">Idle</span></li>
+                                <li class="agent-item"><i class="fas fa-code"></i><span class="agent-name">Coder</span><span class="agent-status">Idle</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Quantum Simulator Card -->
+                    <div class="card quantum-card">
+                        <div class="card-header">
+                            <h3>Quantum Simulator</h3>
+                            <button class="refresh-btn"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="quantum-visualization" width="280" height="150"></canvas>
+                            <div class="quantum-stats">
+                                <div class="stat-item"><span class="stat-label">Qubits</span><span class="stat-value">4</span></div>
+                                <div class="stat-item"><span class="stat-label">Gates</span><span class="stat-value">28</span></div>
+                                <div class="stat-item"><span class="stat-label">Circuits</span><span class="stat-value">3</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Blockchain Card -->
+                    <div class="card blockchain-card">
+                        <div class="card-header">
+                            <h3>Blockchain Status</h3>
+                            <span class="status-indicator offline"></span>
+                        </div>
+                        <div class="card-body">
+                            <p class="status-message">Blockchain integration is currently disabled.</p>
+                            <button class="action-btn enable-blockchain">Enable Blockchain</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Assistant View -->
+            <section id="assistant-view" class="view">
+                <h2>Virtual Assistant</h2>
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message system">
+                            <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                            <div class="message-content"><p>Hello! I'm your Quantum Virtual Assistant. How can I help you today?</p></div>
+                            <div class="message-time">10:30 AM</div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="message-input" placeholder="Type your message...">
+                        <button id="send-message"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </section>
+            <!-- Quantum View -->
+            <section id="quantum-view" class="view">
+                <h2>Quantum Computing</h2>
+                <div class="quantum-grid">
+                    <div class="card quantum-simulator-card">
+                        <div class="card-header"><h3>Quantum Circuit Designer</h3></div>
+                        <div class="card-body">
+                            <div class="circuit-canvas-container"><canvas id="circuit-canvas" width="600" height="300"></canvas></div>
+                            <div class="circuit-controls">
+                                <button class="action-btn add-qubit"><i class="fas fa-plus"></i> Add Qubit</button>
+                                <button class="action-btn add-gate">Add Gate</button>
+                                <button class="action-btn run-circuit">Run Circuit</button>
+                                <button class="action-btn clear-circuit">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card quantum-results-card">
+                        <div class="card-header"><h3>Simulation Results</h3></div>
+                        <div class="card-body">
+                            <div class="results-visualization"><canvas id="results-canvas" width="400" height="200"></canvas></div>
+                            <div class="results-data">
+                                <table class="results-table">
+                                    <thead><tr><th>State</th><th>Probability</th><th>Count</th></tr></thead>
+                                    <tbody id="results-body">
+                                        <tr><td>|0000⟩</td><td>0.063</td><td>64</td></tr>
+                                        <tr><td>|0001⟩</td><td>0.063</td><td>64</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Blockchain View -->
+            <section id="blockchain-view" class="view">
+                <h2>Blockchain Integration</h2>
+                <div class="blockchain-grid">
+                    <div class="card network-card">
+                        <div class="card-header"><h3>Network Status</h3></div>
+                        <div class="card-body">
+                            <div class="network-status">
+                                <div class="status-item"><span class="status-label">Network</span><span class="status-value network-name">Testnet</span></div>
+                                <div class="status-item"><span class="status-label">Status</span><div class="status-indicator offline"></div><span class="connection-status">Disconnected</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Settings View -->
+            <section id="settings-view" class="view">
+                <h2>Settings</h2>
+                <div class="settings-grid">
+                    <div class="card settings-card">
+                        <div class="card-header"><h3>Preferences</h3></div>
+                        <div class="card-body">
+                            <p>Settings features coming soon.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

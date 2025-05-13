@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  qva-core:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: qva-core:latest
+    container_name: qva-core
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+      - ./logs:/app/logs
+      - ./data:/app/data
+    depends_on:
+      - qva-db
+      - qva-redis
+    networks:
+      - qva-network
+
+  qva-frontend:
+    image: node:16-alpine
+    container_name: qva-frontend
+    restart: unless-stopped
+    working_dir: /app
+    command: sh -c "cd frontend && npm install && npm run dev"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+    depends_on:
+      - qva-core
+    networks:
+      - qva-network
+
+  qva-db:
+    image: postgres:14-alpine
+    container_name: qva-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: qva
+      POSTGRES_USER: qva
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-qvapassword}
+    ports:
+      - "5432:5432"
+    volumes:
+      - qva-db-data:/var/lib/postgresql/data
+    networks:
+      - qva-network
+
+  qva-redis:
+    image: redis:alpine
+    container_name: qva-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - qva-redis-data:/data
+    networks:
+      - qva-network
+
+  qva-blockchain:
+    image: ethereum/client-go:stable
+    container_name: qva-blockchain
+    restart: unless-stopped
+    ports:
+      - "8545:8545"
+    volumes:
+      - qva-blockchain-data:/root/.ethereum
+    command: --dev --http --http.addr=0.0.0.0 --http.api=eth,net,web3,personal,miner
+    networks:
+      - qva-network
+
+networks:
+  qva-network:
+    driver: bridge
+
+volumes:
+  qva-db-data:
+  qva-redis-data:
+  qva-blockchain-data:
