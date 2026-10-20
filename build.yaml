@@ -1,0 +1,89 @@
+# ============================================================================
+# BUILD MANIFEST - QVA-merged
+# ============================================================================
+# Authoritative record of how this project is built, tested and
+# verified, and of what is still broken. Read by Aetherius-OS's
+# build manifest registry and validated by
+# src/programme/buildManifest.ts.
+#
+# Promoted from Temp/Repository-Reconciliation on 2026-10-20, where an earlier desktop-duplicate
+# reconciliation had set it aside. The manifest records what was
+# measured at the time of promotion, not what the repository's own
+# documentation claims.
+# ============================================================================
+schema_version: "1.0.0"
+
+project:
+  id: qva-merged
+  name: QVA-merged
+  kind: application
+  domain: qva-merged
+  description: >-
+    Merged quantum computing system: quantum core, blockchain, AI, backend and frontend.
+  repository: true
+  branch: main
+  languages: [js, py]
+
+toolchain:
+  build_system: python/pytest
+  package_manager: pip
+  requirements:
+    - name: "python"
+      version: ">=3.10"
+      required: true
+      purpose: "the runtime that executes the package"
+    - name: "pip"
+      version: ">=24"
+      required: true
+      purpose: "installing the declared requirements"
+
+commands:
+  - name: inspect
+    command: "echo 'no build system is declared by this repository'"
+    working_directory: .
+    timeout_minutes: 1
+
+dependencies:
+  projects: []
+  external: []
+
+status:
+  state: PARTIAL
+  last_verified: "2026-10-20"
+  summary: >-
+    The project holds 3061 lines of its own source and no tests. Nothing about
+    it has been demonstrated to work.
+  evidence:
+    - "git remote get-url origin -> https://github.com/jayprophit/QVA-merged.git"
+    - "git rev-parse --abbrev-ref HEAD -> main"
+    - "git log -1 --format=%H -> 5c661cee053ac5ff479a19b15c8f16dd08c40d44"
+    - "git log -1 --format=%ad --date=short -> 2025-05-13"
+    - "Measured own source lines: 3061. Measured test files: 0."
+
+known_issues:
+  - id: QVA-MERGED-TST-001
+    severity: high
+    summary: >-
+      There is no test suite, so the build gate proves nothing.
+    evidence: >-
+      Measured own source lines: 3061, test files: 0.
+    status: OPEN
+  - id: QVA-MERGED-LIC-001
+    severity: medium
+    summary: >-
+      No licence file. The owner chooses which licence applies.
+    evidence: >-
+      No LICENSE or LICENCE file at the repository root.
+    status: OPEN
+
+notes:
+  - >-
+    Promoted into the workspace on 2026-10-20 from
+    Temp/Repository-Reconciliation, where a desktop-duplicate
+    reconciliation had set it aside. The repository was a clean
+    clone of the owner's GitHub remote on the branch named above,
+    with no uncommitted work at the time of promotion.
+  - >-
+    The state recorded here is what was measured at promotion. It
+    is a starting point, and the gate that will move it forward is
+    the build command recorded in the commands section above.
